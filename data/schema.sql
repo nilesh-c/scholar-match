@@ -1,0 +1,12 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE User(UserId VARCHAR(20) PRIMARY KEY, Password VARCHAR(100));
+CREATE TABLE Token(UserId VARCHAR(20) PRIMARY KEY, Token VARCHAR(100), Expires DATE);
+CREATE TABLE DocumentFolder(Id integer PRIMARY KEY, UserId VARCHAR(20), Name VARCHAR(100), Description VARCHAR(1000), Created DATE, Modified DATE);
+CREATE TABLE DocumentItem(Id INTEGER PRIMARY KEY, DocumentFolderId INTEGER, Abstract VARCHAR(5000), IsProfiled BOOLEAN, Profiled DATE, Description VARCHAR(1000), Created DATE, Modified DATE, Source VARCHAR(1000));
+CREATE TABLE Author(Id INTEGER PRIMARY KEY, Name VARCHAR(100));
+CREATE TABLE DocumentAuthor(DocumentItemId INTEGER, AuthorId INTEGER, PRIMARY KEY(DocumentItemId, AuthorId));
+CREATE TABLE Citation(FromDocumentItemId INTEGER, ToDocumentItemId INTEGER, PRIMARY KEY(FromDocumentItemId, ToDocumentItemId));
+CREATE TABLE MatchFolder(Id integer PRIMARY KEY, UserId VARCHAR(20), Name VARCHAR(100), DocumentFolderId1 INTEGER, DocumentFolderId2 INTEGER,  Description VARCHAR(1000), Created DATE, Modified DATE, `Limit` REAL, Threshold REAL);
+CREATE TABLE MatchItem(Id INTEGER PRIMARY KEY, MatchFolderId INTEGER, DocumentItemId1 INTEGER, DocumentItemId2 INTEGER, Score REAL);
+COMMIT;
